@@ -16,6 +16,8 @@
         <module>cloud-customer</module>
         <!--api通用包-->
         <module>api-common</module>
+        <!--微服务仓储模块-->
+        <module>cloud-storage</module>
     </modules>
 
 
