@@ -1,6 +1,7 @@
 package com.trevis.customer.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.trevis.customer.dto.BuyDTO;
 import com.trevis.customer.entity.CustomerEntity;
 
 /**
@@ -15,5 +16,11 @@ public interface CustomerService extends IService<CustomerEntity> {
      * @param entity e
      */
     void getNewCustomer(CustomerEntity entity);
+
+
+    /**
+     * 扣减积分
+     */
+    boolean reducePoints(BuyDTO dto);
 
 }

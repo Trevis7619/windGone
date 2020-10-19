@@ -4,6 +4,15 @@ server:
 spring:
   application:
     name: cloud-customer
+  cloud:
+    nacos:
+      discovery:
+        #server-addr: localhost:8848 #Nacos服务注册中心地址
+        server-addr: localhost:1111 #Nacos服务注册中心地址,使用nginx代理地址
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #配置Sentinel dashboard地址
+        port: 8719
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
     driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
@@ -14,3 +23,47 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
+
+seata:
+  enabled: true
+  tx-service-group: seata_customer
+  enable-auto-data-source-proxy: true
+  registry:
+    nacos:
+      application: seata-server
+      group: SEATA_GROUP
+      server-addr: localhost:1111
+      namespace : ""
+      username: nacos
+      password: nacos
+  config:
+    nacos:
+      group: SEATA_GROUP
+      server-addr: localhost:1111
+      namespace : ""
+      username: nacos
+      password: nacos
+  #seata客户端配置
+  client:
+    rm:
+      report-success-enable: true
+    undo:
+      log-table: undo_log
+  service:
+    vgroup-mapping:
+      seata_customer: default
+
+
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+feign:
+  sentinel:
+    enabled: true # 激活Sentinel对Feign的支持
+

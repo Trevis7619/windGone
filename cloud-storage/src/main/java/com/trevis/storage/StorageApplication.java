@@ -2,6 +2,8 @@ package com.trevis.storage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  *@author chenyijie
@@ -10,6 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 启动类添加扫描范围注解或者添加@Mapper
  */
 @SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients
 public class StorageApplication {
 
     public static void main(String[] args) {
