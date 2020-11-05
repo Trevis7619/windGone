@@ -36,4 +36,6 @@ public class BuyDTO {
     @NotNull(message = "购买数量不可为空")
     private Long computerAmount;
 
+
+
 }
