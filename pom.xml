@@ -18,6 +18,8 @@
         <module>api-common</module>
         <!--微服务仓储模块-->
         <module>cloud-storage</module>
+        <module>kafka-producer</module>
+        <module>kafka-consumer</module>
     </modules>
 
 

@@ -1,0 +1,34 @@
+server:
+  port: 9801
+
+spring:
+  application:
+    name: cloud-stream-consumer-kafka
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:1111  #Nacos服务注册中心地址,使用nginx代理地址
+    #消息驱动
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092,localhost:9094  #kafka集群
+
+      bindings:
+        input:
+          destination: aa
+          content-type: text/plain
+          group:
+
+
+#端点暴露
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+
+
+
