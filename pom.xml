@@ -18,8 +18,12 @@
         <module>api-common</module>
         <!--微服务仓储模块-->
         <module>cloud-storage</module>
+        <!--kafka消息队列-->
         <module>kafka-producer</module>
         <module>kafka-consumer</module>
+        <!--rabbitMQ消息队列-->
+        <module>rabbit-producer</module>
+        <module>rabbit-consumer</module>
     </modules>
 
 

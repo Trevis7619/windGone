@@ -1,0 +1,36 @@
+server:
+  port: 9801
+
+spring:
+  application:
+    name: cloud-stream-consumer-rabbitMQ
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:1111  #Nacos服务注册中心地址,使用nginx代理地址
+    #消息驱动
+    stream:
+      bindings: # 服务的整合处理
+        input: # 这个名字是一个通道的名称
+          destination: studyExchange # 表示要使用的Exchange名称定义
+          group: port9801Queue  #自定义队列
+          content-type: application/json # 设置消息类型，本次为json，文本则设置“text/plain”
+  #官方推荐使用spring boot的rabbit配置选项
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+#端点暴露
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+
+
+

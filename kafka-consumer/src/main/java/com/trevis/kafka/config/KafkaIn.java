@@ -8,7 +8,7 @@ import org.springframework.messaging.MessageChannel;
  * @Date 2020/11/6 9:13 上午
  */
 public interface KafkaIn {
-
+    
     @Input("kafka_in")
     MessageChannel kafka();
 
