@@ -15,11 +15,11 @@ public class ConsumerTraditionalController {
 
     /**
      * 监听消费消息
-     * 监听队列,消费temp1队列,如果没有则创建;如果使用queues,则队列必须存在
+     * 监听队列,消费temp1队列
      */
     @RabbitListener(bindings = @QueueBinding(
             exchange = @Exchange(value = "studyExchange", type = "topic"),
-            value = @Queue(value = "temp1")))
+            value = @Queue(value = "studyExchange.port9801Queue")))
     public void watch(String message) {
         log.info("不使用stream驱动消费temp1消息:{}", new Gson().toJson(message));
     }
