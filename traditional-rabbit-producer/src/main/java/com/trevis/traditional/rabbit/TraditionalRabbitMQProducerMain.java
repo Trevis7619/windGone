@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 入口类
  */
 @SpringBootApplication
-public class RabbitMQProducerMain {
+public class TraditionalRabbitMQProducerMain {
     public static void main(String[] args) {
-        SpringApplication.run(RabbitMQProducerMain.class, args);
+        SpringApplication.run(TraditionalRabbitMQProducerMain.class, args);
     }
 }

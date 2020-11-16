@@ -17,7 +17,7 @@ public class ConsumerTraditionalController {
      * 监听消费消息
      * 监听队列,消费temp1队列
      */
-    @RabbitListener(queues = "receiveInfo")
+    @RabbitListener(queues = "test.queue")
     public void watch(String message) {
         log.info("不使用stream驱动消费temp1消息:{}", new Gson().toJson(message));
         //ack尝试
