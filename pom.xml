@@ -21,9 +21,12 @@
         <!--kafka消息队列-->
         <module>kafka-producer</module>
         <module>kafka-consumer</module>
+        <!--rabbitMQ消息队列,整合SpringCloudStream-->
+        <module>stream-rabbit-producer</module>
+        <module>stream-rabbit-consumer</module>
         <!--rabbitMQ消息队列-->
-        <module>rabbit-producer</module>
-        <module>rabbit-consumer</module>
+        <module>traditional-rabbit-producer</module>
+        <module>traditional-rabbit-consumer</module>
     </modules>
 
 

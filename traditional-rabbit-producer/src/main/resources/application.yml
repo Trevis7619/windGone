@@ -1,0 +1,31 @@
+server:
+  port: 8801
+
+spring:
+  application:
+    name: cloud-traditional-producer-rabbitMQ
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:1111  #Nacos服务注册中心地址,使用nginx代理地址
+  #官方推荐使用spring boot的rabbit配置选项
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+
+
+#端点暴露
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+
+
+
