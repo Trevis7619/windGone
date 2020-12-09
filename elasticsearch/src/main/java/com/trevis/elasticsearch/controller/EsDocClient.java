@@ -3,21 +3,28 @@ package com.trevis.elasticsearch.controller;
 import com.google.gson.Gson;
 import com.trevis.elasticsearch.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -96,7 +103,55 @@ public class EsDocClient {
         DeleteResponse response = restHighLevelClient.delete(request, RequestOptions.DEFAULT);
 
         log.info("id{}删除状态:{}", id, response.toString());
+    }
 
+    /**
+     * 批量插入
+     */
+    @RequestMapping("bulk/doc")
+    public void bulkDoc() throws IOException {
+
+        BulkRequest request = new BulkRequest();
+
+        List<UserEntity> list = new ArrayList<>();
+
+        list.forEach(l -> {
+            //request.add()..
+        });
+
+        restHighLevelClient.bulk(request, RequestOptions.DEFAULT);
+    }
+
+
+    /**
+     * 查询
+     */
+    @RequestMapping("search/doc")
+    public void searchDoc() throws IOException {
+        SearchRequest request= new SearchRequest("client-index");
+
+        //构造搜索条件,建造者模式
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+
+        //精确查询
+        //TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery();
+
+        //匹配所有
+        //QueryBuilders.matchAllQuery();
+
+       builder.query(QueryBuilders.matchQuery("name","陈艺杰"));
+
+        //分页
+        builder.from(0);
+        builder.size(1);
+
+        //排序
+        //builder.sort("name");
+
+        request.source(builder);
+        SearchResponse response = restHighLevelClient.search(request,RequestOptions.DEFAULT);
+
+        log.info("查询结果:{}",response.toString());
     }
 
 
