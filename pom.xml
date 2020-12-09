@@ -27,6 +27,7 @@
         <!--rabbitMQ消息队列-->
         <module>traditional-rabbit-producer</module>
         <module>traditional-rabbit-consumer</module>
+        <module>elasticsearch</module>
     </modules>
 
 
