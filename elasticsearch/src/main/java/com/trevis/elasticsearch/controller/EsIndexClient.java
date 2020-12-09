@@ -1,4 +1,4 @@
-package com.trevis.elasticsearch.fnc;
+package com.trevis.elasticsearch.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -28,10 +28,8 @@ public class EsIndexClient {
     public void createIndex() throws IOException {
         //创建索引请求
         CreateIndexRequest request = new CreateIndexRequest("client-index");
-
         //执行创建请求
         restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
-
         log.info("创建索引成功");
     }
 
@@ -53,9 +51,7 @@ public class EsIndexClient {
     @RequestMapping("delete/index")
     public void deleteIndex() throws  IOException{
         DeleteIndexRequest request = new DeleteIndexRequest("client-index");
-
         AcknowledgedResponse response = restHighLevelClient.indices().delete(request,RequestOptions.DEFAULT);
-
         log.info("测试删除索引:{}",response);
 
     }
