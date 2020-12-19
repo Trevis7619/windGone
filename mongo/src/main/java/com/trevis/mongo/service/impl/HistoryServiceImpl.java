@@ -5,11 +5,12 @@ import com.trevis.mongo.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
- *@author chenyijie
- *@Date  2020/12/19 6:30 下午
+ * @author chenyijie
+ * @Date 2020/12/19 6:30 下午
  */
 @Service
 public class HistoryServiceImpl implements HistoryService {
@@ -18,7 +19,12 @@ public class HistoryServiceImpl implements HistoryService {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void insert(@RequestBody HistoryEntity entity) {
+    public void insert(HistoryEntity entity) {
         mongoTemplate.insert(entity);
+    }
+
+    @Override
+    public List<HistoryEntity> showAll() {
+        return mongoTemplate.findAll(HistoryEntity.class);
     }
 }

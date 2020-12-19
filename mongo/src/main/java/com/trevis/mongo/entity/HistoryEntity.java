@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collation = "history")
+@Document(collection = "history")
 public class HistoryEntity {
 
 
