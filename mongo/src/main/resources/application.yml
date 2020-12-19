@@ -1,0 +1,10 @@
+server:
+  port: 9522
+
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: windGone
