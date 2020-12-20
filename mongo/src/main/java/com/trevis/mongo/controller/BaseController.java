@@ -2,10 +2,9 @@ package com.trevis.mongo.controller;
 
 import com.trevis.mongo.entity.HistoryEntity;
 import com.trevis.mongo.service.HistoryService;
+import entity.Tr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author chenyijie
@@ -32,8 +31,8 @@ public class BaseController {
      * 查询所有数据
      */
     @GetMapping("/list")
-    public List<HistoryEntity> showAll() {
-        return historyService.showAll();
+    public Tr<?> showAll() {
+        return new Tr<>(200, "请求成功", historyService.showAll());
     }
 
 }

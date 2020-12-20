@@ -1,11 +1,13 @@
 package com.trevis.mongo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -30,6 +32,15 @@ public class HistoryEntity {
      * 文档内容
      */
     private String content;
+
+
+    /**
+     * 事件发生时间
+     */
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date time;
 
 
     /**
