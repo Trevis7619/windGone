@@ -6,6 +6,8 @@ import entity.Tr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author chenyijie
  * @Date 2020/12/19 6:27 下午
@@ -22,7 +24,8 @@ public class BaseController {
      * 新增数据
      */
     @PostMapping("/doc")
-    public void insert(@RequestBody HistoryEntity historyEntity) {
+    public void insert(@RequestBody HistoryEntity historyEntity, HttpServletRequest request) {
+        request.getRemoteUser();
         historyService.insert(historyEntity);
     }
 

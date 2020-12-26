@@ -30,6 +30,8 @@
         <module>elasticsearch</module>
 
         <module>mongo</module>
+        <!--并发编程-->
+        <module>juc</module>
     </modules>
 
 
