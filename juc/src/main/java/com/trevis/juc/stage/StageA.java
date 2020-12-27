@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -27,8 +26,9 @@ public class StageA {
      * AsyncResult -> Future接口调用get()会阻塞线程
      */
     @GetMapping("minus")
-    public void minus() throws ExecutionException, InterruptedException {
+    public void minus() throws InterruptedException {
         int total = 100;
+
 
         List<Future<Integer>> list = new ArrayList<>();
 
@@ -44,4 +44,5 @@ public class StageA {
             }
         }
     }
+
 }
