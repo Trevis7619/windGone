@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -27,10 +29,19 @@ public class StageA {
     @GetMapping("minus")
     public void minus() throws ExecutionException, InterruptedException {
         int total = 100;
+
+        List<Future<Integer>> list = new ArrayList<>();
+
         for (int i = 0; i < 100; i++) {
-            System.out.println(1);
-            Future<Integer> result = baseService.minus(total);
-            total = result.get();
+            list.add(baseService.minus(total));
+        }
+
+        for (Future<Integer> item : list) {
+            while (true) {
+                if (item.isDone()) {
+                    break;
+                }
+            }
         }
     }
 }
