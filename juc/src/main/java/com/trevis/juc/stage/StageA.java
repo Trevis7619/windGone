@@ -1,6 +1,7 @@
 package com.trevis.juc.stage;
 
-import com.trevis.juc.service.BaseService;
+import com.trevis.juc.service.FucService;
+import com.trevis.juc.service.Impl.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,6 @@ public class StageA {
     public void minus() throws InterruptedException {
         int total = 100;
 
-
         List<Future<Integer>> list = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
@@ -43,6 +43,29 @@ public class StageA {
                 }
             }
         }
+    }
+
+
+    /**
+     * lamada表达式 ->函数式接口
+     */
+    @GetMapping("lambda")
+    public void lambda(){
+        //传统匿名内部类
+        FucService fucService = new FucService() {
+            @Override
+            public String say(String s) {
+                return null;
+            }
+        };
+
+        //lambda
+        FucService fucService1 = (s)->s;
+        System.out.println(fucService1.say("13"));
+
+
+
+
     }
 
 }

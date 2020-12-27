@@ -1,4 +1,4 @@
-package com.trevis.juc.service;
+package com.trevis.juc.service.Impl;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
