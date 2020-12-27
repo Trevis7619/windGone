@@ -2,7 +2,7 @@ package com.trevis.juc.stage;
 
 import com.trevis.juc.service.CallService;
 import com.trevis.juc.service.FucService;
-import com.trevis.juc.service.Impl.BaseService;
+import com.trevis.juc.service.Impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 public class StageA {
 
     @Autowired
-    private BaseService baseService;
+    private BaseServiceImpl baseServiceImpl;
 
 
     /**
@@ -34,7 +34,7 @@ public class StageA {
         List<Future<Integer>> list = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
-            list.add(baseService.minus(total));
+            list.add(baseServiceImpl.minus(total));
         }
 
         for (Future<Integer> item : list) {

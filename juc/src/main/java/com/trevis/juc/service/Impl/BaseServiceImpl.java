@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 
 
 @Service
-public class BaseService  {
+public class BaseServiceImpl {
 
     @Async
     public Future<Integer> minus(int minus) throws InterruptedException {
