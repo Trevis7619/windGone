@@ -55,9 +55,10 @@ public class StageA {
         FucService fucService = new FucService() {
             @Override
             public String say(String s) {
-                return null;
+                return s+1;
             }
         };
+        System.out.println(fucService.say("123"));
 
         //lambda
         FucService fucService1 = (s)->s;
