@@ -1,5 +1,6 @@
 package com.trevis.juc.stage;
 
+import com.trevis.juc.service.CallService;
 import com.trevis.juc.service.FucService;
 import com.trevis.juc.service.Impl.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,10 @@ public class StageA {
      */
     @GetMapping("lambda")
     public void lambda(){
+
         //传统匿名内部类
         FucService fucService = new FucService() {
+            //实现方法
             @Override
             public String say(String s) {
                 return s+1;
@@ -64,9 +67,13 @@ public class StageA {
         FucService fucService1 = (s)->s;
         System.out.println(fucService1.say("13"));
 
+        //{}代码返回快,只有一行省略{return ;}
+        CallService callService = (a,b)->2*a+b;
+        System.out.println(callService.getInt(3,4));
 
 
-
+        //Thread入参Runnable接口对象直接使用lambda
+        Thread x = new Thread(()->{},"a");
     }
 
 }
