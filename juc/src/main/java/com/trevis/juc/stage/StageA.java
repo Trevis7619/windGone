@@ -1,5 +1,7 @@
 package com.trevis.juc.stage;
 
+import com.trevis.juc.callable.CallableA;
+import com.trevis.juc.callable.CallableB;
 import com.trevis.juc.reentrantock.ConditionA;
 import com.trevis.juc.service.CallService;
 import com.trevis.juc.service.FucService;
@@ -10,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @author chenyijie
@@ -109,11 +108,11 @@ public class StageA {
      */
     @GetMapping("threadTest")
     public void threadTest() throws ExecutionException, InterruptedException {
-        ConditionA conditiona =new ConditionA();
+        ConditionA conditiona = new ConditionA();
 
 
-        new Thread(()->{
-            for (int i = 0; i <10 ; i++) {
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
                 try {
                     conditiona.a();
                 } catch (InterruptedException e) {
@@ -123,8 +122,8 @@ public class StageA {
         }).start();
 
 
-        new Thread(()->{
-            for (int i = 0; i <10 ; i++) {
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
                 try {
                     conditiona.b();
                 } catch (InterruptedException e) {
@@ -132,5 +131,34 @@ public class StageA {
                 }
             }
         }).start();
+    }
+
+
+    /**
+     * futuretask是runnable的子类
+     */
+    @GetMapping("futureTaskTest")
+    public void futureTaskTest() throws ExecutionException, InterruptedException {
+        //get()阻塞线程
+        FutureTask<String> futureTask = new FutureTask<>(new CallableA());
+
+        new Thread(futureTask).start();
+
+        while (true) {
+            if (futureTask.isDone()) {
+                System.out.println(futureTask.get());
+                break;
+            }
+        }
+
+        //多线程实验
+        FutureTask<String> a = new FutureTask<>(new CallableA());
+        a.run();
+         //a.run();
+        FutureTask<String> b = new FutureTask<>(new CallableB());
+       // b.run();
+
+        new Thread(a).start();
+        new Thread(b).start();
     }
 }
