@@ -95,6 +95,10 @@ public class StageA {
         CopyOnWriteArrayList<String> list2 = new CopyOnWriteArrayList<>();
 
 
+        //set
+        CopyOnWriteArraySet<String> listSet1 = new CopyOnWriteArraySet<>();
+
+
         Set<String> s = new HashSet<>();
 
         Map<String, Object> zz = new HashMap<>();
@@ -244,5 +248,23 @@ public class StageA {
                 saleTicket.sale();
             }
         }, "B").start();
+    }
+
+
+    /**
+     * countDownLatch计数类(闭锁)
+     */
+    @GetMapping("countDownLatchTest")
+    public void countDownLatchTest() throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(5);
+
+        new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("执行中");
+                countDownLatch.countDown();
+            }
+        }).start();
+        countDownLatch.await();
+        System.out.println("结束");
     }
 }
