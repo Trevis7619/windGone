@@ -2,7 +2,10 @@ package com.trevis.juc.stage;
 
 import com.trevis.juc.callable.CallableA;
 import com.trevis.juc.callable.CallableB;
-import com.trevis.juc.reentrantock.ConditionA;
+import com.trevis.juc.reentranlock.ConditionA;
+import com.trevis.juc.reentranlock.ConditionB;
+import com.trevis.juc.reentranlock.ConditionC;
+import com.trevis.juc.reentranlock.SaleTicket;
 import com.trevis.juc.service.CallService;
 import com.trevis.juc.service.FucService;
 import com.trevis.juc.service.Impl.BaseServiceImpl;
@@ -107,12 +110,12 @@ public class StageA {
      * 若不满足条件,挂起线程释放锁切换线程
      */
     @GetMapping("threadTest")
-    public void threadTest() throws ExecutionException, InterruptedException {
+    public void threadTest() {
         ConditionA conditiona = new ConditionA();
 
 
         new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 100; i++) {
                 try {
                     conditiona.a();
                 } catch (InterruptedException e) {
@@ -123,7 +126,7 @@ public class StageA {
 
 
         new Thread(() -> {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 100; i++) {
                 try {
                     conditiona.b();
                 } catch (InterruptedException e) {
@@ -133,9 +136,65 @@ public class StageA {
         }).start();
     }
 
+    @GetMapping("threadTest2")
+    public void threadTest2() {
+        ConditionB conditionB = new ConditionB();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    conditionB.a();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    conditionB.b();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 
     /**
-     * futuretask是runnable的子类
+     * condition实现顺序执行线程
+     */
+    @GetMapping("threadTest3")
+    public void threadTest3() {
+        ConditionC conditionc = new ConditionC();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                conditionc.printA();
+            }
+        }).start();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                conditionc.printB();
+            }
+        }).start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                conditionc.printC();
+            }
+        }).start();
+    }
+
+
+    /**
+     * futuretask是runnable,future的实现类
      */
     @GetMapping("futureTaskTest")
     public void futureTaskTest() throws ExecutionException, InterruptedException {
@@ -153,12 +212,37 @@ public class StageA {
 
         //多线程实验
         FutureTask<String> a = new FutureTask<>(new CallableA());
-        a.run();
-         //a.run();
+
         FutureTask<String> b = new FutureTask<>(new CallableB());
-       // b.run();
+
 
         new Thread(a).start();
         new Thread(b).start();
+    }
+
+
+    /**
+     * reentrantock实现售票
+     */
+    @GetMapping("reentranlockTest")
+    public void reentranlockTest() {
+        SaleTicket saleTicket = new SaleTicket();
+
+        synchronized (this) {
+            System.out.println(this);
+        }
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                saleTicket.sale();
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                saleTicket.sale();
+            }
+        }, "B").start();
     }
 }

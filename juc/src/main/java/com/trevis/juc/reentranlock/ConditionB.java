@@ -1,36 +1,29 @@
-package com.trevis.juc.reentrantock;
+package com.trevis.juc.reentranlock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * @author chenyijie
- * @Date 2021/1/4 8:39 下午
- * <p>
- * 同一个资源类两把锁
- * printA printB  交互打印
- */
-public class ConditionA {
+public class ConditionB {
 
 
     Lock lock = new ReentrantLock();
 
-    Condition a = lock.newCondition();
-    Condition b = lock.newCondition();
+    Condition c = lock.newCondition();
 
     boolean existA = true;
 
 
     public void a() throws InterruptedException {
+        System.out.println("a尝试获取资源");
         lock.lock();
         try {
             if (existA) {
-                a.await();
+                c.await();
             }
             System.out.println("a");
             existA = true;
-            b.signal();
+            c.signal();
 
         } finally {
             lock.unlock();
@@ -39,14 +32,15 @@ public class ConditionA {
 
 
     public void b() throws InterruptedException {
+        System.out.println("b尝试获取资源");
         lock.lock();
         try {
             if (!existA) {
-                b.await();
+                c.await();
             }
             System.out.println("b");
             existA = false;
-            a.signal();
+            c.signal();
         } finally {
             lock.unlock();
         }
