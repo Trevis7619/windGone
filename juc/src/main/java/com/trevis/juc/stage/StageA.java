@@ -9,6 +9,7 @@ import com.trevis.juc.reentranlock.SaleTicket;
 import com.trevis.juc.service.CallService;
 import com.trevis.juc.service.FucService;
 import com.trevis.juc.service.Impl.BaseServiceImpl;
+import com.trevis.juc.volatileTest.VolatileA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -140,6 +141,7 @@ public class StageA {
         }).start();
     }
 
+
     @GetMapping("threadTest2")
     public void threadTest2() {
         ConditionB conditionB = new ConditionB();
@@ -266,5 +268,34 @@ public class StageA {
         }).start();
         countDownLatch.await();
         System.out.println("结束");
+    }
+
+
+    /**
+     * volatile
+     */
+    @GetMapping("volatileTest")
+    public void volatileTest(){
+        VolatileA a = new VolatileA();
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                a.start();
+            }).start();
+        }
+
+        new Thread(() -> {
+            a.stop();
+        }).start();
+
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                a.fakeStart();
+            }).start();
+        }
+
+        new Thread(() -> {
+            a.fakeStop();
+        }).start();
+
     }
 }
