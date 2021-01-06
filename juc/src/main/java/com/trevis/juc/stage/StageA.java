@@ -298,4 +298,63 @@ public class StageA {
         }).start();
 
     }
+
+
+    /**
+     *CyclicBarrier删栏,循环计数器
+     */
+    @GetMapping("cyclicBarrierTest")
+    public void cyclicBarrierTest() {
+
+        //三次计数后reset
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(3,
+                new Thread(()->{
+                    System.out.println("我宣布阻塞暂时结束");
+                }));
+
+
+        for (int i=0;i<15;i++){
+            final int temp =i;
+            new Thread(()->{
+                    if(temp==5){
+                        cyclicBarrier.reset();
+                        System.out.println("逢5加班了");
+                    }else {
+                        System.out.println("我被阻塞了");
+                        try {
+                            cyclicBarrier.await(2000,TimeUnit.MICROSECONDS);
+                        } catch (InterruptedException | TimeoutException | BrokenBarrierException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            }).start();
+        }
+
+    }
+
+
+    /**
+     * Semaphore控制同时并发线程数,可以用于抢红包等
+     */
+    @GetMapping("semaphoreTest")
+    public void semaphoreTest(){
+        //维护一个3信号量的资源池
+        Semaphore semaphore = new Semaphore(3);
+
+        for (int i = 0; i <20 ; i++) {
+            new Thread(()->{
+                try {
+                    //信号量-1
+                    semaphore.acquire();
+                    System.out.println("抢到资源了,三秒后放出资源");
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }finally {
+                    semaphore.release();
+                }
+            }).start();
+        }
+
+    }
 }
