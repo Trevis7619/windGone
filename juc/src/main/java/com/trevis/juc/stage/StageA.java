@@ -1,7 +1,9 @@
 package com.trevis.juc.stage;
 
+import cn.hutool.core.thread.NamedThreadFactory;
 import com.trevis.juc.callable.CallableA;
 import com.trevis.juc.callable.CallableB;
+import com.trevis.juc.readWriteLock.ReadWriteLockA;
 import com.trevis.juc.reentranlock.ConditionA;
 import com.trevis.juc.reentranlock.ConditionB;
 import com.trevis.juc.reentranlock.ConditionC;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * @author chenyijie
@@ -275,7 +278,7 @@ public class StageA {
      * volatile
      */
     @GetMapping("volatileTest")
-    public void volatileTest(){
+    public void volatileTest() {
         VolatileA a = new VolatileA();
         for (int i = 0; i < 100; i++) {
             new Thread(() -> {
@@ -301,32 +304,32 @@ public class StageA {
 
 
     /**
-     *CyclicBarrier删栏,循环计数器
+     * CyclicBarrier删栏,循环计数器
      */
     @GetMapping("cyclicBarrierTest")
     public void cyclicBarrierTest() {
 
         //三次计数后reset
         CyclicBarrier cyclicBarrier = new CyclicBarrier(3,
-                new Thread(()->{
+                new Thread(() -> {
                     System.out.println("我宣布阻塞暂时结束");
                 }));
 
 
-        for (int i=0;i<15;i++){
-            final int temp =i;
-            new Thread(()->{
-                    if(temp==5){
-                        cyclicBarrier.reset();
-                        System.out.println("逢5加班了");
-                    }else {
-                        System.out.println("我被阻塞了");
-                        try {
-                            cyclicBarrier.await(2000,TimeUnit.MICROSECONDS);
-                        } catch (InterruptedException | TimeoutException | BrokenBarrierException e) {
-                            e.printStackTrace();
-                        }
+        for (int i = 0; i < 15; i++) {
+            final int temp = i;
+            new Thread(() -> {
+                if (temp == 5) {
+                    cyclicBarrier.reset();
+                    System.out.println("逢5加班了");
+                } else {
+                    System.out.println("我被阻塞了");
+                    try {
+                        cyclicBarrier.await(2000, TimeUnit.MICROSECONDS);
+                    } catch (InterruptedException | TimeoutException | BrokenBarrierException e) {
+                        e.printStackTrace();
                     }
+                }
             }).start();
         }
 
@@ -337,12 +340,12 @@ public class StageA {
      * Semaphore控制同时并发线程数,可以用于抢红包等
      */
     @GetMapping("semaphoreTest")
-    public void semaphoreTest(){
+    public void semaphoreTest() {
         //维护一个3信号量的资源池
         Semaphore semaphore = new Semaphore(3);
 
-        for (int i = 0; i <20 ; i++) {
-            new Thread(()->{
+        for (int i = 0; i < 20; i++) {
+            new Thread(() -> {
                 try {
                     //信号量-1
                     semaphore.acquire();
@@ -350,11 +353,179 @@ public class StageA {
                     TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     semaphore.release();
                 }
             }).start();
         }
 
+    }
+
+
+    /**
+     * readWriteLock读写锁
+     * <p>
+     * 写入时加锁
+     * 读取时若没有线程在写入,允许并发读
+     * <p>
+     * 适用于读多写少的场景提高效率
+     */
+    @GetMapping("readWriteLockTest")
+    public void readWriteLockTest() {
+
+        ReadWriteLockA readWriteLockA = new ReadWriteLockA();
+
+        for (int i = 0; i < 500; i++) {
+            new Thread(() -> {
+                try {
+                    readWriteLockA.read();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+
+        for (int i = 0; i < 2; i++) {
+            new Thread(() -> {
+                readWriteLockA.inc();
+            }).start();
+        }
+
+    }
+
+
+    /**
+     * BlockingQueue阻塞队列
+     */
+    @GetMapping("bolckingQueueTest")
+    public void blockingQueueTest() throws InterruptedException {
+
+        //数组实现的阻塞队列
+        BlockingQueue<String> queue = new ArrayBlockingQueue<>(5);
+
+        queue.put("1");
+        queue.put("2");
+
+
+        System.out.println(queue.poll());
+        System.out.println(queue.take());
+        // queue.stream().forEach(System.out::println);
+
+        //链表实现的阻塞队列,可以不初始化大小
+        BlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>();
+        BlockingQueue<?> queue1 = new LinkedBlockingQueue<>(4);
+
+
+        //双向列表,同时支持fifo,filo
+        ConcurrentLinkedDeque<?> concurrentLinkedDeque = new ConcurrentLinkedDeque<>();
+        //concurrentLinkedDeque.addLast();
+
+    }
+
+
+    /**
+     * ThreadPool 线程池
+     */
+    @GetMapping("ThreadPoolTest")
+    public void threadPoolTest() throws ExecutionException, InterruptedException {
+
+        //创建五个线程的线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+        //每个线程耗时五秒
+        /*for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            executorService.execute(() -> {
+                System.out.println(finalI);
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }*/
+
+        //单例模式,线程池只有一个线程
+        ExecutorService executorService1 = Executors.newSingleThreadExecutor();
+
+
+        ExecutorService executorService2 = Executors.newCachedThreadPool();
+
+
+        //自定义线程池
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,3,2,TimeUnit.SECONDS
+        ,new ArrayBlockingQueue<Runnable>(5),new NamedThreadFactory("trevis",false)
+        ,new ThreadPoolExecutor.CallerRunsPolicy());
+
+
+      /*  for(int i=0;i<10;i++){
+            threadPoolExecutor.execute(()->{
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName());
+            });
+        }*/
+
+
+       Future<String> d =  threadPoolExecutor.submit(()-> "123");
+
+        while (true){
+            if(d.isDone()){
+                System.out.println(d.get());
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * stream流
+     */
+    @GetMapping("StreamTest")
+    public void StreamTest(){
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+
+        list = list.stream().map(e-> e+"1").collect(Collectors.toList());
+        System.out.println(list);
+    }
+
+
+    /**
+     * CompletableFuture
+     */
+    @GetMapping("CompletableFutureTest")
+    public void completableFutureTask() throws ExecutionException, InterruptedException {
+
+        ExecutorService executorService =  Executors.newFixedThreadPool(3);
+
+        //有返回值异步
+        String a = "23";
+        String result= CompletableFuture.supplyAsync(()->{
+            return a+"1";
+        },executorService).whenComplete((m,n)->{
+            System.out.println(m);
+            System.out.println(n);
+        }).get();
+
+        System.out.println(result);
+
+
+        //无返回值异步
+        /*for(int i=0;i<10;i++){
+            CompletableFuture.runAsync(()->{
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(123);
+            },executorService);
+        }*/
     }
 }
