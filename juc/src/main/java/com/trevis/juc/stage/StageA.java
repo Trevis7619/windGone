@@ -453,9 +453,9 @@ public class StageA {
 
 
         //自定义线程池
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,3,2,TimeUnit.SECONDS
-        ,new ArrayBlockingQueue<Runnable>(5),new NamedThreadFactory("trevis",false)
-        ,new ThreadPoolExecutor.CallerRunsPolicy());
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 3, 2, TimeUnit.SECONDS
+                , new ArrayBlockingQueue<Runnable>(5), new NamedThreadFactory("trevis", false)
+                , new ThreadPoolExecutor.CallerRunsPolicy());
 
 
       /*  for(int i=0;i<10;i++){
@@ -470,10 +470,10 @@ public class StageA {
         }*/
 
 
-       Future<String> d =  threadPoolExecutor.submit(()-> "123");
+        Future<String> d = threadPoolExecutor.submit(() -> "123");
 
-        while (true){
-            if(d.isDone()){
+        while (true) {
+            if (d.isDone()) {
                 System.out.println(d.get());
                 break;
             }
@@ -485,13 +485,13 @@ public class StageA {
      * stream流
      */
     @GetMapping("StreamTest")
-    public void StreamTest(){
+    public void StreamTest() {
         List<String> list = new ArrayList<>();
         list.add("1");
         list.add("2");
         list.add("3");
 
-        list = list.stream().map(e-> e+"1").collect(Collectors.toList());
+        list = list.stream().map(e -> e + "1").collect(Collectors.toList());
         System.out.println(list);
     }
 
@@ -502,30 +502,27 @@ public class StageA {
     @GetMapping("CompletableFutureTest")
     public void completableFutureTask() throws ExecutionException, InterruptedException {
 
-        ExecutorService executorService =  Executors.newFixedThreadPool(3);
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
 
         //有返回值异步
         String a = "23";
-        String result= CompletableFuture.supplyAsync(()->{
-            return a+"1";
-        },executorService).whenComplete((m,n)->{
+        String result = CompletableFuture.supplyAsync(() -> {
+            return a + "1";
+        }).whenComplete((m, n) -> {
             System.out.println(m);
-            System.out.println(n);
         }).get();
-
-        System.out.println(result);
 
 
         //无返回值异步
-        /*for(int i=0;i<10;i++){
-            CompletableFuture.runAsync(()->{
+        for (int i = 0; i < 10; i++) {
+            CompletableFuture.runAsync(() -> {
                 try {
                     TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 System.out.println(123);
-            },executorService);
-        }*/
+            }, executorService);
+        }
     }
 }
