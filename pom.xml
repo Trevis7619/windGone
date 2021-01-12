@@ -32,6 +32,9 @@
         <module>mongo</module>
         <!--并发编程-->
         <module>juc</module>
+        <module>invocationHandler</module>
+        <!--动态代理-->
+
     </modules>
 
 
