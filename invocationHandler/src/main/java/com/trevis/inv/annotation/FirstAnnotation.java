@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  *@author chenyijie
  *@Date  2021/1/12 9:47 下午
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FirstAnnotation {
 

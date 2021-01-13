@@ -1,8 +1,9 @@
 package com.trevis.inv.controller;
 
 import com.trevis.inv.annotation.FirstAnnotation;
-import com.trevis.inv.demo.DemoA;
+import com.trevis.inv.demo.DaiLiA;
 import com.trevis.inv.entity.Trevis;
+import com.trevis.inv.service.Say;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,17 @@ import java.lang.reflect.Method;
 @RequestMapping("inv")
 public class BaseController {
 
+    /**
+     * 注入代理类
+     */
     @Autowired
-    private DemoA demoA;
+    private DaiLiA daiLiA;
+
+    /**
+     * 被委托类
+     */
+    @Autowired
+    private Say SayImpl;
 
     /**
      * 反射操作方法
@@ -64,24 +74,48 @@ public class BaseController {
     @GetMapping("annotationTest")
     public void annotationTest() {
         //获取实例
-       Trevis t = new Trevis();
-       //通过实例反射获取类
+        Trevis t = new Trevis();
+        //通过实例反射获取类
         Class<?> trevisClass = t.getClass();
 
 
         Annotation[] annotations = trevisClass.getAnnotations();
-        for(Annotation item: annotations){
-           if(item.annotationType()==FirstAnnotation.class){
-               System.out.println("匹配到了");
-           }
+        for (Annotation item : annotations) {
+            if (item.annotationType() == FirstAnnotation.class) {
+                System.out.println("匹配到了");
+            }
         }
 
         //判断是否存在当前注解
         boolean result = trevisClass.isAnnotationPresent(FirstAnnotation.class);
-        if(result){
+        if (result) {
             FirstAnnotation annotation = trevisClass.getAnnotation(FirstAnnotation.class);
             System.out.println(annotation.hobby());
         }
+
+        //获取属性上的注解
+        Field[] fields = trevisClass.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(FirstAnnotation.class)) {
+                System.out.println("获取到了属性上的注解");
+                System.out.println(field.getAnnotation(FirstAnnotation.class).hobby());
+            }
+        }
+
+    }
+
+
+    /**
+     * 动态代理
+     */
+    @GetMapping("proxyTest")
+    public void proxyTest() throws Throwable {
+
+        DaiLiA daiLiA = new DaiLiA(SayImpl);
+
+        Say say = (Say) daiLiA.bind();
+        say.sayHello();
+
 
     }
 

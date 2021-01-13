@@ -10,7 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @FirstAnnotation(name="风逝")
 public class Trevis {
+
+    @FirstAnnotation(hobby = "嫦娥")
     private String name="陈艺杰";
 
+
     private String age="22";
+
+    public  void sayHaHa(String name){
+        System.out.println("你好啊"+name);
+    }
 }
