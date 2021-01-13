@@ -14,4 +14,6 @@ import java.lang.annotation.Target;
 public @interface FirstAnnotation {
 
     String name() default "trevis";
+
+    String hobby() default "game";
 }
