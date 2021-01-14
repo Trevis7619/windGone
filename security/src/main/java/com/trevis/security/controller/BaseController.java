@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController(value = "base")
 public class BaseController {
 
-    @GetMapping("vt")
-    public void hello(){
-        System.out.println("hello");
+    @GetMapping("hello")
+    public String hello(){
+        return "12";
     }
 
     @GetMapping("bye")
     public void bye(){
-        System.out.println("bye");
     }
 }
