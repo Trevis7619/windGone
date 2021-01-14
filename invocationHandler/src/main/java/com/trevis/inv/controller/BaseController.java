@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
 @RestController
 @RequestMapping("inv")
@@ -111,9 +109,14 @@ public class BaseController {
     @GetMapping("proxyTest")
     public void proxyTest() throws Throwable {
 
-        DaiLiA daiLiA = new DaiLiA(SayImpl);
+        //创建代理对象
+        Say say = (Say) Proxy.newProxyInstance(SayImpl.getClass().getClassLoader(), SayImpl.getClass().getInterfaces(),
+                (proxy, method, args) -> {
+                    System.out.println("开启代理模式");
+                    return method.invoke(SayImpl, args);
+                });
 
-        Say say = (Say) daiLiA.bind();
+
         say.sayHello();
 
 

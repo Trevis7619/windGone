@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 
 /**
@@ -17,6 +16,10 @@ import java.lang.reflect.Proxy;
 @NoArgsConstructor
 public class DaiLiA implements InvocationHandler {
 
+
+    /**
+     * 被代理对象
+     */
     private Object target;
 
     /**
@@ -26,16 +29,6 @@ public class DaiLiA implements InvocationHandler {
         this.target = target;
     }
 
-
-    /**
-     * 通过被代理类的类加载器,接口,委托给代理类
-     *
-     * @return Object 代理类
-     */
-    public Object bind() {
-        Object o = target;
-        return Proxy.newProxyInstance(o.getClass().getClassLoader(), o.getClass().getInterfaces(), this);
-    }
 
 
     @Override
