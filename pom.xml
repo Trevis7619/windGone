@@ -27,14 +27,16 @@
         <!--rabbitMQ消息队列-->
         <module>traditional-rabbit-producer</module>
         <module>traditional-rabbit-consumer</module>
+        <!--es-->
         <module>elasticsearch</module>
-
+        <!--mongo-->
         <module>mongo</module>
         <!--并发编程-->
         <module>juc</module>
-        <module>invocationHandler</module>
         <!--动态代理-->
-
+        <module>invocationHandler</module>
+        <!--安全框架-->
+        <module>security</module>
     </modules>
 
 

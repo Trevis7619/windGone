@@ -109,7 +109,7 @@ public class BaseController {
     @GetMapping("proxyTest")
     public void proxyTest() throws Throwable {
 
-        //创建代理对象
+        //匿名表达式创建动态代理
         Say say = (Say) Proxy.newProxyInstance(SayImpl.getClass().getClassLoader(), SayImpl.getClass().getInterfaces(),
                 (proxy, method, args) -> {
                     System.out.println("开启代理模式");
