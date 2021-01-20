@@ -37,6 +37,7 @@
         <module>invocationHandler</module>
         <!--安全框架-->
         <module>security</module>
+        <module>cloud-redis</module>
     </modules>
 
 
@@ -107,12 +108,12 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
-            <!--jedis-->
-            <dependency>
+            <!--jedis(换redisTemplage)-->
+           <!-- <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
-            </dependency>
+            </dependency>-->
             <!--log4j日志框架-->
             <dependency>
                 <groupId>log4j</groupId>
@@ -137,6 +138,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
