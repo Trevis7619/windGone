@@ -38,6 +38,8 @@
         <!--安全框架-->
         <module>security</module>
         <module>cloud-redis</module>
+        <module>net</module>
+        <module>shiro</module>
     </modules>
 
 

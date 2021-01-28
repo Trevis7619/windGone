@@ -1,5 +1,7 @@
 package com.trevis.redis.controller;
 
+import com.google.gson.Gson;
+import com.trevis.redis.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -30,7 +32,45 @@ public class BaseController {
         list.add("1");
         list.add("2");
         redisTemplate.opsForList().leftPushAll("list1",list);
-        List<Object> returns =  redisTemplate.opsForList().range("list1",0,-1);
+
+        redisTemplate.multi();
+
+
+    }
+
+
+    /**
+     * redis事务
+     */
+    @GetMapping("multi")
+    public void multi(){
+        redisTemplate.opsForValue().set("name",2);
+        redisTemplate.opsForValue().increment("name",3);
+        System.out.println(redisTemplate.opsForValue().get("name"));
+    }
+
+
+    /**
+     * 序列化,对象使用json存储
+     */
+    @GetMapping("seri")
+    public void seri(){
+        User user = new User();
+        user.setName("陈艺杰");
+        user.setHobby("游泳");
+
+        //存json
+        redisTemplate.opsForValue().set("minDan",new Gson().toJson(user));
+        User user1 = new Gson().fromJson((String) redisTemplate.opsForValue().get("minDan"),User.class);
+        System.out.println(user1.getName());
+        System.out.println(user1.getHobby());
+
+
+        //存entity json
+        redisTemplate.opsForValue().set("minDan",user);
+        User user2 = (User) redisTemplate.opsForValue().get("minDan");
+        System.out.println(user2.getName());
+        System.out.println(user2.getHobby());
 
     }
 
