@@ -5,6 +5,24 @@
     <title>Title</title>
 </head>
 <body>
-hello
+<div id="app">
+    <div>用户名</div>
+    <div>密码</div>
+    <button @click="login">登录</button>
+</div>
 </body>
+<script src="/js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        },
+        methods:{
+            login(){
+
+            }
+        }
+    })
+</script>
 </html>

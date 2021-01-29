@@ -50,10 +50,13 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
         //放开拦截
         filterMap.put("/shiro/init","anon");
-        filterMap.put("/login.html","anon");
         filterMap.put("/login/**","anon");
+        filterMap.put("login.html","anon");
+        //放开静态资源
+        filterMap.put("/statics/**","anon");
+
         //拦截所有
-        filterMap.put("/**", "authc");
+        filterMap.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilterFactoryBean;

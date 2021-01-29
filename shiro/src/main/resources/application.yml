@@ -2,14 +2,11 @@ server:
   port: 1234
 
 spring:
-  resources:
-    static-locations:
-      - classpath:/META-INF/resources/
-      - classpath:/resources/
-      - classpath:/static/
-      - classpath:/public/
-      - classpath:/static/sys
-      - classpath:/templates
+  mvc:
+    static-path-pattern: /**       #满足才会执行非controller请求,默认即/**
+#  resources:
+#    static-locations:            #静态资源位置,去哪里找静态资源[配合freemaker使用,类似于nginx)
+#      - classpath:/templates
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
     driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
@@ -25,7 +22,6 @@ spring:
   freemarker:
     template-loader-path:
       - classpath:/templates/
-      - classpath:/static/
     suffix: .html   #模板文件后缀名
 
 
