@@ -28,4 +28,21 @@ public class Tr<T> {
         this(code, message, null);
     }
 
+
+    /**
+     * 错误请求
+     */
+    public Tr(String message, T data) {
+        this.message = message;
+        this.data = data;
+    }
+
+    /**
+     * 错误请求
+     */
+    public Tr(String message) {
+        this.message = message;
+    }
+
+
 }

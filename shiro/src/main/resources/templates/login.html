@@ -6,21 +6,52 @@
 </head>
 <body>
 <div id="app">
-    <div>用户名</div>
-    <div>密码</div>
+    <label title="用户名">
+        <input type="text" v-model="name"/>
+    </label>
+    <label title="密码">
+        <input type="text" v-model="password"/>
+    </label>
     <button @click="login">登录</button>
-</div>
-</body>
-<script src="/js/vue.js"></script>
+    <label>
+        <input type="text" v-model="message"/>
+    </label>
+    <button @click="getAge">获取年龄</button>
+    <label>
+        <input v-model="age"/>
+    </label>
+    {{message}}
+</div></body>
+<script src="../statics/js/vue.js"></script>
+<script src="../statics/js/jquery3.5.js"></script>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Vue!'
+            name: '',
+            password: '',
+            message: 'Hello Vue!',
+            age: ''
         },
-        methods:{
-            login(){
+        methods: {
+            login() {
+                let param = {name: this.name, password: this.password}
+                $.ajax({
+                    type: "POST",
+                    url: "/shiro/login",
+                    data: JSON.stringify(param),
+                    contentType: "application/json",
+                    success: function (result) {
+                        app.message = result.message
+                    }
+                });
+            },
 
+            //请求age
+            getAge() {
+                $.get("/shiro/age", function (r) {
+                    app.age=r.data
+                })
             }
         }
     })
