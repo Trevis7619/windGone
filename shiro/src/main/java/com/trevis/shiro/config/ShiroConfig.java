@@ -26,15 +26,17 @@ public class ShiroConfig {
      * 注入AuthorizingRealm
      * relam对象
      */
-    @Bean
+    @Bean("customRealm")
     public CustomRealm customRealm() {
+        //redis
         RedisManager redisManager = new RedisManager();
         redisManager.setHost("127.0.0.1");
         redisManager.setPort(6380);
 
+        //shiro缓存管理器
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         //唯一标识
-        redisCacheManager.setPrincipalIdFieldName("name");
+        redisCacheManager.setPrincipalIdFieldName("id");
         redisCacheManager.setRedisManager(redisManager);
         log.info("redis缓存管理器:{}", new Gson().toJson(redisCacheManager));
 
@@ -44,7 +46,6 @@ public class ShiroConfig {
         customRealm.setCachingEnabled(true);
         //开启认证缓存
         customRealm.setAuthenticationCachingEnabled(true);
-        // customRealm.setAuthenticationCacheName("authenticationCache");
         customRealm.setCacheManager(redisCacheManager);
         return customRealm;
     }
@@ -53,9 +54,9 @@ public class ShiroConfig {
      * 管理器,注入自定义的realm
      */
     @Bean("securityManager")
-    public DefaultWebSecurityManager securityManager(CustomRealm customRealm) {
+    public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(customRealm);
+        securityManager.setRealm(customRealm());
         //securityManager.setCacheManager(myRedisCacheManager);   全局缓存处理,单一relam可以在relam中配置缓存处理方案
         return securityManager;
     }
