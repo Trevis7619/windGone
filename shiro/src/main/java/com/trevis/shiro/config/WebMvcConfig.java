@@ -38,7 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(loginInteceptor).excludePathPatterns("/login.html", "/statics/**"
-        ,"/shiro/login");
+       /* registry.addInterceptor(loginInteceptor).excludePathPatterns("/login.html", "/statics/**"
+        ,"/shiro/login");*/
     }
 }

@@ -23,7 +23,9 @@ spring:
     template-loader-path:
       - classpath:/templates/
     suffix: .html   #模板文件后缀名
-
+  redis:
+    host: 127.0.0.1
+    port: 6380
 
 
 mybatis-plus:
