@@ -1,8 +1,8 @@
 package com.trevis.net.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.net.Socket;
  *@author chenyijie
  *@Date  2021/1/21 10:00 下午
  */
-@Controller
+@RestController
 @RequestMapping("net")
 public class NetController {
 
