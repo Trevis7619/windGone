@@ -16,6 +16,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private loginInteceptor loginInteceptor;
 
+    @Autowired
+    private JwtInteceptor jwtInteceptor;
+
 
     /**
      * 访问静态资源
@@ -38,7 +41,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-       /* registry.addInterceptor(loginInteceptor).excludePathPatterns("/login.html", "/statics/**"
+        //mvc拦截器
+     /*   registry.addInterceptor(loginInteceptor).excludePathPatterns("/login.html", "/statics/**"
         ,"/shiro/login");*/
+
+        //token
+        registry.addInterceptor(jwtInteceptor).excludePathPatterns("/login.html", "/statics/**"
+                ,"/shiro/login");
+
     }
 }

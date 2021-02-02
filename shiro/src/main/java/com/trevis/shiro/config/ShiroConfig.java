@@ -78,7 +78,8 @@ public class ShiroConfig {
         filterMap.put("/statics/**", "anon");
 
         //拦截所有
-        filterMap.put("/**", "authc");
+       // filterMap.put("/**", "authc");
+        filterMap.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         //默认认证路径 默认login.jsp
