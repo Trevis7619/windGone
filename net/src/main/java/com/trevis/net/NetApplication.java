@@ -19,6 +19,7 @@ public class NetApplication {
         SpringApplication.run(NetApplication.class, args);
 
 
+
         //自定义线程池
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 5, 2, TimeUnit.SECONDS
                 , new ArrayBlockingQueue<Runnable>(5), new NamedThreadFactory("trevis", false)

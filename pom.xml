@@ -93,11 +93,11 @@
                 <version>${mysql.version}</version>
             </dependency>
             <!--德鲁伊数据库连接池-->
-            <dependency>
+            <!--<dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
