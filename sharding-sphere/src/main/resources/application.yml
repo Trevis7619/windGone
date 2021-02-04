@@ -1,0 +1,59 @@
+server:
+  port: 1235
+
+spring:
+  mvc:
+    static-path-pattern: /**       #满足才会执行非controller请求,默认即/**
+  #模板引擎
+  freemarker:
+    template-loader-path:
+      - classpath:/templates/
+    suffix: .html   #模板文件后缀名
+  redis:
+    host: 127.0.0.1
+    port: 6380
+
+  #分库分表
+  shardingsphere:
+    datasource:
+      #配置真实数据源
+      names: wg0,wg1
+      wg0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/wind_gone?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: 123456
+
+      wg1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/wind_gone_2?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: 123456
+
+    #单分片键
+    sharding:
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: wg$->{id % 2}    #主键取余决定去哪个库
+      tables:
+        sys_user:
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+
+    #显示sql
+    props:
+      sql:
+        show: true
+  #允许一个实体类映射多张表
+  main:
+    allow-bean-definition-overriding: true
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
