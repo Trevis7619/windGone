@@ -46,7 +46,7 @@ spring:
 
       tables:
         sys_role:
-          actual-data-nodes: wg$->{1..2}.sys_role
+          actual-data-nodes: wg$->{1..2}.sys_role   #可以不用写,对于那些只有一个库的表,没做水平拆分的可以写一下
           database-strategy:
             standard:   #标准分片策略,只支持单分片键
               sharding-column: id
@@ -65,6 +65,7 @@ spring:
           key-generator:
             column: id
             type: SNOWFLAKE
+      #broadcast-tables:    #字典表,每次crud所有数据源里的表都会被修改
 
 
     #显示sql
