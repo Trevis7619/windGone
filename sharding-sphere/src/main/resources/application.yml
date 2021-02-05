@@ -34,15 +34,29 @@ spring:
 
     #单分片键
     sharding:
-      default-database-strategy:
-        inline:
-          sharding-column: id
-          algorithm-expression: wg$->{id % 2}    #主键取余决定去哪个库
+#      default-database-strategy:
+#        inline:
+#          sharding-column: id
+#          algorithm-expression: wg$->{id % 2}    #主键取余决定去哪个库
+#      default-table-strategy:
+#        inline:
+#          sharding-column: id
+#          algorithm-expression: sys_user_$->{1-id % 2}
       tables:
         sys_user:
+          #actual-data-nodes: wg$->{0..1}.sys_user_$->{0..1}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: sys_user_$->{1-id % 2}    #主键取余决定去哪个库
+          database-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: wg$->{id % 2}    #主键取余决定去哪个库
           key-generator:
             column: id
             type: SNOWFLAKE
+
 
     #显示sql
     props:

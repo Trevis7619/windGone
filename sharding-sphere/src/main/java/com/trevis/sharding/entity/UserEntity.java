@@ -1,9 +1,6 @@
 package com.trevis.sharding.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,7 +21,8 @@ public class UserEntity implements Serializable {
     private boolean deleted;
 
     @Version
-    private int version;
+    //@TableField(value="version", fill = FieldFill.INSERT, update="%s+1")
+    private Integer version;
 
 
 
