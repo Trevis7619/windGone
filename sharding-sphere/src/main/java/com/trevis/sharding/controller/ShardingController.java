@@ -1,7 +1,10 @@
 package com.trevis.sharding.controller;
 
+import com.trevis.sharding.entity.SysRoleEntity;
 import com.trevis.sharding.entity.UserEntity;
+import com.trevis.sharding.service.SysRoleService;
 import com.trevis.sharding.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,9 @@ public class ShardingController {
     @Resource
     private UserService userService;
 
+    @Autowired
+    private SysRoleService sysRoleService;
+
 
     /**
      * 新增
@@ -28,7 +34,13 @@ public class ShardingController {
         userEntity.setName(name);
 
         userService.save(userEntity);
+
+        SysRoleEntity sysRoleEntity = new SysRoleEntity();
+        sysRoleEntity.setRoleName("ky");
+        sysRoleService.save(sysRoleEntity);
     }
+
+
 
 
     /**

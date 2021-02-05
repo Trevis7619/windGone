@@ -17,15 +17,15 @@ spring:
   shardingsphere:
     datasource:
       #配置真实数据源
-      names: wg0,wg1
-      wg0:
+      names: wg1,wg2
+      wg1:
         type: com.alibaba.druid.pool.DruidDataSource
         driver: com.mysql.jdbc.Driver
         url: jdbc:mysql://localhost:3306/wind_gone?useUnicode=true&characterEncoding=utf-8&useSSL=false
         username: root
         password: 123456
 
-      wg1:
+      wg2:
         type: com.alibaba.druid.pool.DruidDataSource
         driver: com.mysql.jdbc.Driver
         url: jdbc:mysql://localhost:3306/wind_gone_2?useUnicode=true&characterEncoding=utf-8&useSSL=false
@@ -34,25 +34,34 @@ spring:
 
     #单分片键
     sharding:
-#      default-database-strategy:
+      default-data-source-name: wg1   #没有配置分库策略的默认数据源
+#      default-database-strategy:          #默认分库策略
 #        inline:
 #          sharding-column: id
-#          algorithm-expression: wg$->{id % 2}    #主键取余决定去哪个库
+#          algorithm-expression: wg$->{1}    #主键取余决定去哪个库
 #      default-table-strategy:
 #        inline:
 #          sharding-column: id
 #          algorithm-expression: sys_user_$->{1-id % 2}
+
       tables:
+        sys_role:
+          actual-data-nodes: wg$->{1..2}.sys_role
+          database-strategy:
+            standard:   #标准分片策略,只支持单分片键
+              sharding-column: id
+              precise-algorithm-class-name: com.trevis.sharding.config.standard.PreciseDbConfig        # 必选  =,in
+              #range-algorithm-class-name:          #  between and
         sys_user:
-          #actual-data-nodes: wg$->{0..1}.sys_user_$->{0..1}
+          actual-data-nodes: wg$->{1..2}.sys_user_$->{0..1}
           table-strategy:
             inline:
               sharding-column: id
-              algorithm-expression: sys_user_$->{1-id % 2}    #主键取余决定去哪个库
+              algorithm-expression: sys_user_$->{id % 2+1}    #主键取余决定去哪个库
           database-strategy:
-            inline:
+            inline:    #行表达式分片
               sharding-column: id
-              algorithm-expression: wg$->{id % 2}    #主键取余决定去哪个库
+              algorithm-expression: wg$->{id % 2+1}    #主键取余决定去哪个库
           key-generator:
             column: id
             type: SNOWFLAKE
