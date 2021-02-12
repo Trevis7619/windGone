@@ -57,7 +57,7 @@ spring:
           table-strategy:
             inline:
               sharding-column: id
-              algorithm-expression: sys_user_$->{id % 2+1}    #主键取余决定去哪个库
+              algorithm-expression: sys_user_$->{id % 2}    #主键取余决定去哪个库
           database-strategy:
             inline:    #行表达式分片
               sharding-column: id

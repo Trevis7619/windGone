@@ -13,6 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ShardingApplication {
 
     public static void main(String[] args) {
+        ThreadLocal<String> x = new ThreadLocal<>();
+        x.set("132");
+        System.out.println(x.get());
         SpringApplication.run(ShardingApplication.class, args);
     }
 }

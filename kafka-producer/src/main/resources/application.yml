@@ -15,9 +15,8 @@ spring:
           brokers: localhost:9092,localhost:9094  #kafka集群
       bindings:
         kafka_out:
-          destination: aa
+          destination: myFirstTopic
           content-type: text/plain
-
 
 
 
