@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+    <contextName>myAppName</contextName>
+
+    <!-- 日志在工程中的输出位置 -->
+    <!--<property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${appName}"/>-->
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <!-- 日志输出编码 -->
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!--logstash配置-->
+  <!--  <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>127.0.0.1:4560</destination>
+        &lt;!&ndash; 日志输出编码 &ndash;&gt;
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "logLevel": "%level",
+                        "serviceName": "${springAppName:-}",
+                        "pid": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "rest": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+        &lt;!&ndash;<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>&ndash;&gt;
+    </appender>-->
+
+    <root>
+       <!-- <appender-ref ref="LOGSTASH"/>-->
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

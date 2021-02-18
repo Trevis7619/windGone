@@ -152,6 +152,8 @@ public class EsDocClient {
         SearchResponse response = restHighLevelClient.search(request,RequestOptions.DEFAULT);
 
         log.info("查询结果:{}",response.toString());
+        log.debug("测试debug");
+        log.error("测试error");
     }
 
 
