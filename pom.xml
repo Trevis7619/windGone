@@ -41,6 +41,7 @@
         <module>net</module>
         <module>shiro</module>
         <module>sharding-sphere</module>
+        <module>leetcode</module>
     </modules>
 
 
