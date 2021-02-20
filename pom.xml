@@ -42,6 +42,7 @@
         <module>shiro</module>
         <module>sharding-sphere</module>
         <module>leetcode</module>
+        <module>nacos-config</module>
     </modules>
 
 

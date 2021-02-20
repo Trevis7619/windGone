@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: nacos-config
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:1111
+        file-extension: yml
+        shared-configs: nacos-config-shared.yml
+
+server:
+  port: 8084
