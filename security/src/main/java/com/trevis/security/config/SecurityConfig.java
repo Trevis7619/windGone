@@ -1,3 +1,4 @@
+/*
 package com.trevis.security.config;
 
 import org.springframework.context.annotation.Bean;
@@ -9,10 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+*/
 /**
  *@author chenyijie
  *@Date  2021/1/14 2:52 下午
- */
+ *//*
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -31,11 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    /**
+    */
+/**
      * 加密
-     */
+     *//*
+
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 }
+*/

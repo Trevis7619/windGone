@@ -471,7 +471,6 @@ public class StageA {
 
 
         Future<String> d = threadPoolExecutor.submit(() -> "123");
-
         while (true) {
             if (d.isDone()) {
                 System.out.println(d.get());

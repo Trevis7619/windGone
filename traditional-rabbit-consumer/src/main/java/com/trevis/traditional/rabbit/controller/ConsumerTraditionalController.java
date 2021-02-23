@@ -18,6 +18,13 @@ public class ConsumerTraditionalController {
      * 监听队列,消费temp1队列
      */
     @RabbitListener(queues = "test.queue")
+ /*   @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "ly.search.insert.queue", durable = "true"),
+            exchange = @Exchange(name = "ly.item.exchange",
+                    type = ExchangeTypes.TOPIC,
+                    ignoreDeclarationExceptions = "true"),
+            key = {"item.insert", "item.update"}
+    ))*/
     public void watch(String message) {
         log.info("不使用stream驱动消费temp1消息:{}", new Gson().toJson(message));
         //ack尝试

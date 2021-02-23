@@ -1,5 +1,6 @@
 package com.trevis.nacos.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class NacosController {
     @Value("${trevis.name}")
     private String name;
 
+    @Autowired
 
     @GetMapping("nacos/hobby")
     public String getHobby() {
