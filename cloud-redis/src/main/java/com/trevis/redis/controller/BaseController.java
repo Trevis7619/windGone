@@ -4,15 +4,15 @@ import com.google.gson.Gson;
 import com.trevis.redis.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Controller
+@RestController
 @RequestMapping("redis")
 public class BaseController {
 
@@ -20,10 +20,19 @@ public class BaseController {
     private RedisTemplate<String, Object> redisTemplate;
 
 
+    @GetMapping("test")
+    public void z() throws InterruptedException {
+        System.out.println(Thread.currentThread());
+        String a ="1";
+        TimeUnit.SECONDS.sleep(100);
+    }
 
 
     @GetMapping("init")
     public void init() {
+        //redis实现分布式锁
+        redisTemplate.opsForValue().setIfAbsent("lock","id",10,TimeUnit.SECONDS);
+
         redisTemplate.opsForValue().set("name", "陈艺杰");
         redisTemplate.opsForValue().set("name", "cyj", 200, TimeUnit.SECONDS);
         System.out.println(redisTemplate.opsForValue().get("name"));
@@ -67,8 +76,8 @@ public class BaseController {
 
 
         //存entity json
-        redisTemplate.opsForValue().set("minDan",user);
-        User user2 = (User) redisTemplate.opsForValue().get("minDan");
+        redisTemplate.opsForValue().set("minDan2",user);
+        User user2 = (User) redisTemplate.opsForValue().get("minDan2");
         System.out.println(user2.getName());
         System.out.println(user2.getHobby());
 
