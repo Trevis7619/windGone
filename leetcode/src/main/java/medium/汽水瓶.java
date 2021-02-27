@@ -1,8 +1,10 @@
+package medium;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main2 {
+public class 汽水瓶 {
 
     /**
      * 汽水瓶,

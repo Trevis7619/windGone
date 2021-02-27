@@ -1,3 +1,5 @@
+package medium;
+
 import java.util.Arrays;
 
 /**
@@ -5,7 +7,7 @@ import java.util.Arrays;
  * @Date 2021/2/24 9:33 上午
  * 合并两个已经排序过的数组
  */
-public class Combine {
+public class 合并已排序数组 {
 
     public static void main(String[] args) {
         int[] a = {1, 3, 4};
