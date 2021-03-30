@@ -43,6 +43,7 @@
         <module>sharding-sphere</module>
         <module>leetcode</module>
         <module>nacos-config</module>
+        <module>testCase</module>
     </modules>
 
 
