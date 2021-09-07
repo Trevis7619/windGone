@@ -1,7 +1,10 @@
 package com.trevis.marriage.service;
 
-import org.springframework.stereotype.Service;
+import com.trevis.marriage.entity.InitEntity;
 
-@Service
-public class InitService {
+import java.util.List;
+
+public interface InitService {
+
+    List<InitEntity> getList();
 }

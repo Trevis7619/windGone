@@ -23,8 +23,7 @@ public class InitController {
 
     @GetMapping("/list")
     public Tr<?> list(){
-
-        return new Tr<>(200,"");
+        return new Tr<>(200,"",initService.getList());
     }
 
 

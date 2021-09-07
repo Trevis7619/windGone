@@ -1,5 +1,8 @@
 package com.trevis.marriage.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -7,9 +10,11 @@ import lombok.Data;
  *@Date  2021/9/8 12:37 上午
  */
 @Data
+@TableName("result")
 public class InitEntity {
 
-    private int Id;
+    @TableId(type = IdType.AUTO)
+    private int id;
 
     private String name;
 
@@ -25,7 +30,7 @@ public class InitEntity {
 
     private String academic;
 
-    private String hourceAndCar;
+    private String houseCar;
 
     private String work;
 
