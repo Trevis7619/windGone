@@ -44,6 +44,7 @@
         <module>leetcode</module>
         <module>nacos-config</module>
         <module>testCase</module>
+        <module>marriage-seeking</module>
     </modules>
 
 

@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * @author chenyijie
@@ -8,13 +6,12 @@ import java.util.stream.Collectors;
  */
 public class Test {
 
+    public static void x(int temp){
+
+    }
+
 
     public static void main(String[] args) {
-     List<Integer> a = new ArrayList<>();
-     a.add(2);
-     a.add(1);
-     a.add(3);
-
-        System.out.println(a.stream().sorted().collect(Collectors.toList()).get(0));
+     String a ="1";
     }
 }
